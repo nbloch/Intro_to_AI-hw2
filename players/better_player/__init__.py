@@ -4,6 +4,7 @@ import time
 import abstract
 from Reversi.board import GameState, OPPONENT_COLOR, BOARD_COLS, BOARD_ROWS, EM
 from utils import INFINITY
+from history_manager import HistoryManager
 
 
 class Player(abstract.AbstractPlayer):
@@ -16,12 +17,27 @@ class Player(abstract.AbstractPlayer):
         self.turns_remaining_in_round = self.k
         self.time_remaining_in_round = self.time_per_k_turns
         self.time_for_current_move = self.time_remaining_in_round / self.turns_remaining_in_round - 0.05
+        self.hist_mgr = HistoryManager()
 
     def get_move(self, game_state, possible_moves):
+        """
+
+        :param GameState game_state:
+        :param possible_moves:
+        :return: Tuple of (x,y)
+        """
         self.clock = time.time()
         self.time_for_current_move = self.time_remaining_in_round / self.turns_remaining_in_round - 0.05
+
+        self.hist_mgr.update(new_board=game_state.board)
         if len(possible_moves) == 1:
+            self.hist_mgr.update(new_move=possible_moves[0])
             return possible_moves[0]
+
+        hist_mgr_out = self.hist_mgr.get_next_move()
+        if hist_mgr_out is not None:
+            self.hist_mgr.update(new_move=hist_mgr_out)
+            return hist_mgr_out
 
         best_move = possible_moves[0]
         next_state = copy.deepcopy(game_state)
@@ -42,7 +58,9 @@ class Player(abstract.AbstractPlayer):
             self.turns_remaining_in_round -= 1
             self.time_remaining_in_round -= (time.time() - self.clock)
 
+        self.hist_mgr.update(new_move=best_move)
         return best_move
+
 
     def utility(self, state):
         delta_tiles = self.get_delta_tiles(state)
@@ -53,6 +71,7 @@ class Player(abstract.AbstractPlayer):
         corner_ratio = self.get_corner_ratio(state)
 
         return 3 * delta_tiles + mobility + potential_mobility + 4 * corner_ratio
+
 
     def get_delta_tiles(self, state):
         my_u = 0
