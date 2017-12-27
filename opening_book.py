@@ -1,6 +1,5 @@
 import operator
 
-sorted_hist={}
 with open(r"Reversi/book.gam", "r") as file:
     games=file.readlines()
     opening_hist = dict()
@@ -12,7 +11,6 @@ with open(r"Reversi/book.gam", "r") as file:
             opening_hist[opening] += 1
     sorted_hist = sorted(opening_hist.items(), key=operator.itemgetter(1), reverse=True)
     sorted_hist = sorted_hist[:70]
-    #print(sorted_hist)
 
 #Writes an opening book of the 70 first entries
 with open(r"Reversi/opening_book.gam", "w") as file:
