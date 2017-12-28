@@ -103,9 +103,6 @@ def main():
     final_result = create_fianl_reult_and_csv_file()
     create_graph_and_final_table(final_result)
 
-    if os.path.isdir('temp'):
-        shutil.rmtree('temp')
-
 
 if __name__ == '__main__':
     main()
