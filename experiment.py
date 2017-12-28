@@ -8,7 +8,7 @@ import shutil
 players = ['simple_player', 'alpha_beta_player', 'min_max_player', 'better_player']
 times = ['2', '10', '50']
 
-maxthreads = 3
+maxthreads = 15
 semaphore = threading.Semaphore(value=maxthreads)
 threads = list()
 
