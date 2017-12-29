@@ -1,9 +1,9 @@
-from subprocess import call
-import threading
-import re
-from matplotlib import pyplot as plt
 import os
-import shutil
+import re
+import threading
+from subprocess import call
+
+from matplotlib import pyplot as plt
 
 players = ['simple_player', 'alpha_beta_player', 'min_max_player', 'better_player']
 times = ['2', '10', '50']

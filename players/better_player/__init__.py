@@ -3,7 +3,7 @@ import time
 
 import abstract
 from Reversi.board import GameState, OPPONENT_COLOR, BOARD_COLS, BOARD_ROWS, EM
-from utils import INFINITY, utility_stats
+from utils import INFINITY
 from history_manager import HistoryManager
 
 
