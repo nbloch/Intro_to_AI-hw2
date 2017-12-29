@@ -54,7 +54,10 @@ class Player(abstract.AbstractPlayer):
         potential_mobility = self.get_potential_mobility(state)
         corner_ratio = self.get_corner_ratio(state)
 
-        return 3 * delta_tiles + mobility + potential_mobility + 4 * corner_ratio
+        number_of_tiles = self.get_tiles_count(state)
+
+        return number_of_tiles * delta_tiles / 32 + (64 - number_of_tiles) * (
+                mobility + potential_mobility + 4 * corner_ratio) / 32
 
     def get_delta_tiles(self, state):
         my_u = 0
@@ -150,6 +153,14 @@ class Player(abstract.AbstractPlayer):
 
     def no_more_time(self):
         return (time.time() - self.clock) >= self.time_for_current_move
+
+    def get_tiles_count(self, state):
+        tile = 0
+        for row in state.board:
+            for box in row:
+                if box != EM:
+                    tile += 1
+        return tile
 
     def __repr__(self):
         return '{} {}'.format(abstract.AbstractPlayer.__repr__(self), 'alpha_better')
