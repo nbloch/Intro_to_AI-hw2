@@ -163,4 +163,4 @@ class Player(abstract.AbstractPlayer):
         return tile
 
     def __repr__(self):
-        return '{} {}'.format(abstract.AbstractPlayer.__repr__(self), 'alpha_better')
+        return '{} {}'.format(abstract.AbstractPlayer.__repr__(self), 'alpha_beta')
