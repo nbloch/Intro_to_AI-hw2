@@ -96,10 +96,10 @@ def create_graph_and_final_table(final_result):
 
 def main():
 
-    if not os.path.isdir('temp'):
-        os.mkdir('temp')
+    # if not os.path.isdir('temp'):
+    #     os.mkdir('temp')
 
-    run_threads()
+    # run_threads()
     final_result = create_fianl_reult_and_csv_file()
     create_graph_and_final_table(final_result)
 
